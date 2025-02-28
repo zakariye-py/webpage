@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Zak Abdi</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,6 +30,16 @@
             padding: 20px;
             font-size: 2em;
             color: white;
+            transition: transform 0.1s ease; /* Add transition for smooth movement */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        header img {
+            margin-left: 10px; /* Add some space between the title and the icon */
+            width: 30px; /* Adjust the size of the icon */
+            height: 30px; /* Adjust the size of the icon */
+            transition: transform 0.1s ease; /* Add transition for smooth movement */
         }
         nav {
             background-color: #333;
@@ -65,28 +75,61 @@
         .content {
             text-align: center;
         }
+        .content p {
+            font-size: 2em; /* Increase the paragraph font size */
+            text-align: left;
+            margin-left: 250px; /* Add left margin */
+            margin-right: 250px;
+        }
+        .content li {
+            font-size: 1.75em;
+            text-align: left;
+            margin-left: 250px; /* Add left margin */
+            margin-right: 250px;
+        }
+        .content h2 {
+            text-align: left;
+            margin-left: 250px; /* Add left margin */
+            margin-right: 250px;
+        }
+        .volume-slider {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 150px; /* Adjust the width as needed */
+            height: 10px; /* Adjust the height as needed */
+            border: 4px solid white; /* Add a thick white border */
+            border-radius: 5px; /* Adjust the border radius as needed */
+            background-color: #333; /* Background color of the slider */
+        }
+        .volume-slider::-webkit-slider-thumb {
+            width: 20px; /* Adjust the thumb width as needed */
+            height: 20px; /* Adjust the thumb height as needed */
+            background-color: white; /* Thumb color */
+            border-radius: 50%; /* Make the thumb round */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+        .volume-slider::-moz-range-thumb {
+            width: 20px; /* Adjust the thumb width as needed */
+            height: 20px; /* Adjust the thumb height as needed */
+            background-color: white; /* Thumb color */
+            border-radius: 50%; /* Make the thumb round */
+            cursor: pointer; /* Change cursor to pointer */
+        }
     </style>
 </head>
-<body class="fade-in">
-    <header>Zak Abdi</header>
+<body>
+    <header id="title">
+        Zak Abdi
+        <img src="favicon.ico" alt="Icon" id="icon">
+    </header>
     <nav>
         <a href="index.html" id="homeLink">Home</a>
         <a href="about.html">About</a>
     </nav>
     <div class="content">
         <h1>About Me</h1>
-        <style>
-            .content {
-                text-align: center;
-            }
-            .content p1 {
-                font-size: 1.5em; /* Increase the paragraph font size */
-            }
-            .content li {
-                font-size: 1em; /* Increase the paragraph font size */
-            }
-        </style>
-        <p1>My name is Zakariye Abdi, and I was born and raised in Woolwich, London, on December 3, 2007. Growing up in this vibrant area fueled my passion for learning and technology, guiding my educational journey. I attended Bexleyheath Academy from 2020 to 2024, where I dedicated myself to my studies and achieved exceptional grades, earning 4s and 5s in subjects such as Business, Engineering, Information Technology, Science, and English, along with a commendable 6 in Mathematics. These accomplishments not only reflect my hard work but also my commitment to academic excellence. Currently, I am pursuing my studies at SIMAD University, one of the leading institutions in Mogadishu, Somalia, from 2024 to 2029. Here, I am furthering my knowledge and skills in technology and engineering. I have developed a solid foundation in programming languages, particularly Python and JavaScript, which I am eager to apply in real-world scenarios. This blend of academic achievement and a strong skill set has equipped me with the tools I need to make a meaningful impact in the tech field.</p>
+        <p>My name is Zakariye Abdi, and I was born and raised in Woolwich, London, on December 3, 2007. Growing up in this vibrant area fueled my passion for learning and technology, guiding my educational journey. I attended Bexleyheath Academy from 2020 to 2024, where I dedicated myself to my studies and achieved exceptional grades, earning 4s and 5s in subjects such as Business, Engineering, Information Technology, Science, and English, along with a commendable 6 in Mathematics. These accomplishments not only reflect my hard work but also my commitment to academic excellence. Currently, I am pursuing my studies at SIMAD University, one of the leading institutions in Mogadishu, Somalia, from 2024 to 2029. Here, I am furthering my knowledge and skills in technology and engineering. I have developed a solid foundation in programming languages, particularly Python and JavaScript, which I am eager to apply in real-world scenarios. This blend of academic achievement and a strong skill set has equipped me with the tools I need to make a meaningful impact in the tech field.</p>
         
         <h2>Experience</h2>
         <ul>
@@ -101,7 +144,37 @@
         </ul>
     </div>
 
+    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="2" step="0.01" value="2">
+
+    <audio id="backgroundAudio" src="SONG.mp3" loop></audio>
+
     <script>
+        const audio = document.getElementById('backgroundAudio');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const audioKey = 'audioCurrentTime';
+        const title = document.getElementById('title');
+        const icon = document.getElementById('icon');
+
+        // Load the audio current time from localStorage
+        window.addEventListener('load', function() {
+            const currentTime = localStorage.getItem(audioKey);
+            if (currentTime) {
+                audio.currentTime = parseFloat(currentTime);
+            }
+            audio.play();
+            document.body.classList.add('fade-in');
+        });
+
+        // Save the audio current time to localStorage before the page unloads
+        window.addEventListener('beforeunload', function() {
+            localStorage.setItem(audioKey, audio.currentTime);
+        });
+
+        // Adjust the audio volume based on the slider value
+        volumeSlider.addEventListener('input', function() {
+            audio.volume = volumeSlider.value;
+        });
+
         document.getElementById('homeLink').addEventListener('click', function(event) {
             event.preventDefault();
             document.body.classList.add('fade-out');
@@ -110,9 +183,30 @@
             }, 500);
         });
 
-        window.addEventListener('load', function() {
-            document.body.classList.remove('fade-out');
-            document.body.classList.add('fade-in');
+        // Create an audio context and analyzer
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const audioSource = audioContext.createMediaElementSource(audio);
+        const analyzer = audioContext.createAnalyser();
+        audioSource.connect(analyzer);
+        analyzer.connect(audioContext.destination);
+        analyzer.fftSize = 256;
+
+        const bufferLength = analyzer.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        function animateTitle() {
+            analyzer.getByteFrequencyData(dataArray);
+            const averageFrequency = dataArray.reduce((a, b) => a + b) / bufferLength;
+            const scale = 1 + averageFrequency / 256;
+            title.style.transform = `scale(${scale})`;
+            icon.style.transform = `scale(${scale})`;
+            requestAnimationFrame(animateTitle);
+        }
+
+        audio.addEventListener('play', function() {
+            audioContext.resume().then(() => {
+                animateTitle();
+            });
         });
     </script>
 </body>
