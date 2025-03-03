@@ -69,15 +69,19 @@
         .content {
             text-align: center;
             padding: 20px;
-            width: 80%;
-            max-width: 1000px;
         }
+        .content h1 {
+            margin-top: 5px;
+        } 
         .project {
+            margin-top: 2px;
             background-color: rgba(255, 255, 255, 0.1);
             padding: 30px;
             margin-bottom: 30px;
             border-radius: 10px;
             font-size: 1.25em; /* Increase the font size */
+            margin-left: 200px;
+            margin-right: 200px;
         }
         .volume-slider {
             position: absolute;
@@ -103,12 +107,30 @@
             border-radius: 50%; /* Make the thumb round */
             cursor: pointer; /* Change cursor to pointer */
         }
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            background-color: #333;
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+        footer a {
+            color: #f2f2f2;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #ddd;
+        }
     </style>
 </head>
 <body>
     <header id="title">
         Zak Abdi
-        <img src="favicon.ico" alt="Icon" id="icon">
+        <a href="index.html">
+            <img src="favicon.ico" alt="Icon" id="icon">
+        </a>
     </header>
     <nav>
         <a href="index.html" id="homeLink">Home</a>
@@ -123,7 +145,7 @@
         </div>
         <div class="project">
             <h2>Discord Group Chat Leaver (2021)</h2>
-            <p>In late 2021, there was a crisis with people maliciously spamming the api with group chats and then add individuals</p>
+            <p>In late 2021, there was a crisis with people maliciously spamming the Discord api with group chats and then add individuals into all of them, sometimes extorting them into sending a sum of money in order for removal. That's why i came up with a solution that removes your account from every group chat that it is in. I coded this in python but although it didn't go as expected, it was still a fun project to work on and was known in the community.</p>
         </div>
         <div class="project">
             <h2>Project 3</h2>
@@ -134,7 +156,6 @@
     <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="1">
 
     <audio id="backgroundAudio" src="SONG.mp3" loop></audio>
-
     <script>
         const audio = document.getElementById('backgroundAudio');
         const volumeSlider = document.getElementById('volumeSlider');
