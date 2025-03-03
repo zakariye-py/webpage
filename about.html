@@ -11,9 +11,8 @@
             color: white;
             opacity: 0;
             transition: opacity 0.5s;
-            background: linear-gradient(0deg, #1e3c72, #2a5298);
+            background: linear-gradient(0deg, #1e3c72, #2a5298, #3a6ea5);
             background-size: 400% 400%;
-            animation: gradientScroll 15s ease infinite;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -37,8 +36,8 @@
         }
         header img {
             margin-left: 10px; /* Add some space between the title and the icon */
-            width: 30px; /* Adjust the size of the icon */
-            height: 30px; /* Adjust the size of the icon */
+            width: 50px; /* Adjust the size of the icon */
+            height: 50px; /* Adjust the size of the icon */
             transition: transform 0.1s ease; /* Add transition for smooth movement */
         }
         nav {
@@ -66,11 +65,6 @@
         body.fade-out {
             opacity: 0;
             transition: opacity 0.5s;
-        }
-        @keyframes gradientScroll {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
         .content {
             text-align: center;
@@ -116,6 +110,22 @@
             border-radius: 50%; /* Make the thumb round */
             cursor: pointer; /* Change cursor to pointer */
         }
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            background-color: #333;
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+        footer a {
+            color: #f2f2f2;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #ddd;
+        }
     </style>
 </head>
 <body>
@@ -123,10 +133,13 @@
         Zak Abdi
         <img src="favicon.ico" alt="Icon" id="icon">
     </header>
+
     <nav>
         <a href="index.html" id="homeLink">Home</a>
         <a href="about.html">About</a>
+        <a href="portfolio.html" id="portfolioLink">Portfolio</a>
     </nav>
+
     <div class="content">
         <h1>About Me</h1>
         <p>My name is Zakariye Abdi, and I was born and raised in Woolwich, London, on December 3, 2007. Growing up in this vibrant area fueled my passion for learning and technology, guiding my educational journey. I attended Bexleyheath Academy from 2020 to 2024, where I dedicated myself to my studies and achieved exceptional grades, earning 4s and 5s in subjects such as Business, Engineering, Information Technology, Science, and English, along with a commendable 6 in Mathematics. These accomplishments not only reflect my hard work but also my commitment to academic excellence. Currently, I am pursuing my studies at SIMAD University, one of the leading institutions in Mogadishu, Somalia, from 2024 to 2029. Here, I am furthering my knowledge and skills in technology and engineering. I have developed a solid foundation in programming languages, particularly Python and JavaScript, which I am eager to apply in real-world scenarios. This blend of academic achievement and a strong skill set has equipped me with the tools I need to make a meaningful impact in the tech field.</p>
@@ -144,9 +157,10 @@
         </ul>
     </div>
 
-    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="2" step="0.01" value="2">
+    <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="1">
 
     <audio id="backgroundAudio" src="SONG.mp3" loop></audio>
+
 
     <script>
         const audio = document.getElementById('backgroundAudio');
@@ -183,6 +197,14 @@
             }, 500);
         });
 
+        document.getElementById('portfolioLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.body.classList.add('fade-out');
+            setTimeout(function() {
+                window.location.href = 'portfolio.html';
+            }, 500);
+        });
+
         // Create an audio context and analyzer
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const audioSource = audioContext.createMediaElementSource(audio);
@@ -207,6 +229,12 @@
             audioContext.resume().then(() => {
                 animateTitle();
             });
+        });
+
+        // Animate background on scroll
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            document.body.style.backgroundPosition = `0% ${scrollPosition / 10}%`;
         });
     </script>
 </body>

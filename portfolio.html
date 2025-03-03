@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zak Abdi</title>
+    <title>Portfolio - Zak Abdi</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
@@ -72,6 +72,13 @@
             width: 80%;
             max-width: 1000px;
         }
+        .project {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            font-size: 1.25em; /* Increase the font size */
+        }
         .volume-slider {
             position: absolute;
             top: 10px;
@@ -96,41 +103,6 @@
             border-radius: 50%; /* Make the thumb round */
             cursor: pointer; /* Change cursor to pointer */
         }
-        .weather {
-            margin-top: 20px;
-            color: white;
-        }
-        .blog-posts {
-            margin-top: 40px;
-            text-align: left;
-            width: 80%;
-            max-width: 800px;
-        }
-        .blog-posts h2 {
-            text-align: center;
-        }
-        .blog-post {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-        }
-        footer {
-            margin-top: auto;
-            padding: 20px;
-            background-color: #333;
-            width: 100%;
-            text-align: center;
-            color: white;
-        }
-        footer a {
-            color: #f2f2f2;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-        footer a:hover {
-            color: #ddd;
-        }
     </style>
 </head>
 <body>
@@ -139,25 +111,23 @@
         <img src="favicon.ico" alt="Icon" id="icon">
     </header>
     <nav>
-        <a href="index.html">Home</a>
+        <a href="index.html" id="homeLink">Home</a>
         <a href="about.html" id="aboutLink">About</a>
-        <a href="portfolio.html" id="portfolioLink">Portfolio</a>
+        <a href="portfolio.html">Portfolio</a>
     </nav>
     <div class="content">
-        <h1>Welcome to My Page</h1>
-        <p>Hello! I'm Zak Abdi, a passionate developer with a love for technology and innovation. Explore my website to learn more about my projects, experiences, and interests.</p>
-        <button id="myButton">Click Me</button>
-        <div class="weather" id="weather"></div>
-        <div class="blog-posts">
-            <h2>Recent Blog Posts</h2>
-            <div class="blog-post">
-                <h3>Understanding JavaScript Closures</h3>
-                <p>JavaScript closures are a fundamental concept that every developer should understand. In this post, we dive deep into how closures work and how you can use them effectively in your code.</p>
-            </div>
-            <div class="blog-post">
-                <h3>Getting Started with React</h3>
-                <p>React is a powerful library for building user interfaces. This post covers the basics of getting started with React, including setting up your development environment and creating your first component.</p>
-            </div>
+        <h1>My Portfolio</h1>
+        <div class="project">
+            <h2>Killrs Bot (2022)</h2>
+            <p>Killrs was a discord multipurpose bot designed in python to prevent nukes happening from your server. Think of it like how bleed currently is before bleed existed. This was a solo project created by me to test out my python skills and gained popularity with 80+ servers and 200k+ members using the bot. Sadly I had gotten denied verification for the bot so it was limited to only 100 servers.</p>
+        </div>
+        <div class="project">
+            <h2>Discord Group Chat Leaver (2021)</h2>
+            <p>In late 2021, there was a crisis with people maliciously spamming the api with group chats and then add individuals</p>
+        </div>
+        <div class="project">
+            <h2>Project 3</h2>
+            <p>Description of project 3.</p>
         </div>
     </div>
 
@@ -165,18 +135,12 @@
 
     <audio id="backgroundAudio" src="SONG.mp3" loop></audio>
 
-    <footer>
-        <p>Connect with me on social media:</p>
-        <a href="https://github.com/zakariye-py" target="_blank">GitHub</a>
-    </footer>
-
     <script>
         const audio = document.getElementById('backgroundAudio');
         const volumeSlider = document.getElementById('volumeSlider');
         const audioKey = 'audioCurrentTime';
         const title = document.getElementById('title');
         const icon = document.getElementById('icon');
-        const weatherDiv = document.getElementById('weather');
 
         // Load the audio current time from localStorage
         window.addEventListener('load', function() {
@@ -198,8 +162,12 @@
             audio.volume = volumeSlider.value;
         });
 
-        document.getElementById('myButton').addEventListener('click', function() {
-            alert('Button was clicked!');
+        document.getElementById('homeLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.body.classList.add('fade-out');
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 500);
         });
 
         document.getElementById('aboutLink').addEventListener('click', function(event) {
@@ -207,14 +175,6 @@
             document.body.classList.add('fade-out');
             setTimeout(function() {
                 window.location.href = 'about.html';
-            }, 500);
-        });
-
-        document.getElementById('portfolioLink').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.body.classList.add('fade-out');
-            setTimeout(function() {
-                window.location.href = 'portfolio.html';
             }, 500);
         });
 
@@ -243,32 +203,6 @@
                 animateTitle();
             });
         });
-
-        // Fetch weather data from MetaWeather
-        const city = 'London'; // Replace with your city
-        const apiUrl = `https://www.metaweather.com/api/location/search/?query=${city}`;
-
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length === 0) {
-                    throw new Error('City not found');
-                }
-                const woeid = data[0].woeid;
-                return fetch(`https://www.metaweather.com/api/location/${woeid}/`);
-            })
-            .then(response => response.json())
-            .then(data => {
-                const weather = data.consolidated_weather[0];
-                const temperature = weather.the_temp.toFixed(1);
-                const weatherDescription = weather.weather_state_name;
-                const currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-                weatherDiv.innerHTML = `Time in ${city}: ${currentTime}<br>Temperature: ${temperature}°C, ${weatherDescription}`;
-            })
-            .catch(error => {
-                weatherDiv.innerHTML = 'Unable to fetch weather data';
-                console.error('Error fetching weather data:', error);
-            });
 
         // Animate background on scroll
         window.addEventListener('scroll', function() {
